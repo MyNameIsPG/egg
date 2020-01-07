@@ -9,7 +9,18 @@ class UserController extends Controller {
     const { ctx } = this;
     const query = ctx.request.body;
     const results = await ctx.service.user.query(query);
-    ctx.body = results;
+    if (results) {
+      ctx.body = {
+        mag: '成功！',
+        code: 1,
+        data: results
+      };
+    } else {
+      ctx.body = {
+        mag: '失败！',
+        code: 0,
+      };
+    }
   }
 
   async add() {

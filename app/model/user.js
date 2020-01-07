@@ -5,7 +5,7 @@ module.exports = app => {
     STRING,
     DATE,
   } = app.Sequelize;
-  const User = app.model.define('tb_user', {
+  const User = app.model.define('tb_users', {
     uuid: {
       type: STRING,
       primaryKey: true,
@@ -15,10 +15,9 @@ module.exports = app => {
     sex: INTEGER,
     phone: STRING,
     password: STRING,
-    email: STRING,
     role_id: STRING,
     head_picture: STRING,
-    flag: STRING,
+    status: STRING,
     create_time: DATE,
     update_time: DATE,
   },
