@@ -1,57 +1,45 @@
 'use strict';
+const Controller = require('egg').Controller;
 const uuidv4 = require('uuid/v4');
 const md5 = require('md5');
-const Controller = require('egg').Controller;
+const results = require('../utils/results')
 
 class UserController extends Controller {
 
-  async query() {
+  async query () {
     const { ctx } = this;
     const query = ctx.request.body;
-    const results = await ctx.service.user.query(query);
-    if (results) {
-      ctx.body = {
-        mag: '成功！',
-        code: 1,
-        data: results
-      };
+    const data = await ctx.service.user.query(query);
+    if (data) {
+      ctx.body = results.querySuccess(data);
     } else {
-      ctx.body = {
-        mag: '失败！',
-        code: 0,
-      };
+      ctx.body = results.errer();
     }
   }
 
-  async add() {
+  async add () {
     const { ctx } = this;
     const data = {
       uuid: uuidv4(),
       name: ctx.request.body.name,
+      head_pic: ctx.request.body.headPic,
+      mobile: ctx.request.body.mobile,
       sex: ctx.request.body.sex,
-      phone: ctx.request.body.phone,
-      email: ctx.request.body.email,
-      head_picture: ctx.request.body.head_picture,
-      flag: 1,
+      password: md5('123456'),
+      status: 1,
       create_time: this.app.mysql.literals.now,
       update_time: this.app.mysql.literals.now,
-      password: md5('123456'),
+      role_id: ctx.request.body.roleId
     };
-    const results = await this.service.user.add(data);
-    if (results) {
-      this.ctx.body = {
-        mag: '成功！',
-        code: 1,
-      };
+    const data = await this.service.user.add(data);
+    if (data) {
+      ctx.body = results.addSuccess(data);
     } else {
-      this.ctx.body = {
-        mag: '失败！',
-        code: 0,
-      };
+      ctx.body = results.errer();
     }
   }
 
-  async update() {
+  async update () {
     const { ctx } = this;
     if (ctx.request.body.uuid) {
       let password;
@@ -73,23 +61,14 @@ class UserController extends Controller {
           uuid: ctx.request.body.uuid,
         },
       };
-      const results = await this.service.user.update(data, options);
-      if (results) {
-        this.ctx.body = {
-          mag: '成功！',
-          code: 1,
-        };
+      const data = await this.service.user.update(data, options);
+      if (data) {
+        ctx.body = results.updateSuccess(data);
       } else {
-        this.ctx.body = {
-          mag: '失败！',
-          code: 0,
-        };
+        ctx.body = results.errer();
       }
     } else {
-      this.ctx.body = {
-        mag: 'uuid不能为空',
-        code: 0,
-      };
+      ctx.body = results.uuidErrer();
     }
   }
 

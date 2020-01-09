@@ -8,4 +8,5 @@ module.exports = app => {
   router.post('/user/query', controller.user.query);
   router.post('/user/add', controller.user.add);
   router.post('/user/update', controller.user.update);
+  router.post('/files/upload', controller.files.index);
 };
