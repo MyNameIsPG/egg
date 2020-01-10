@@ -11,11 +11,18 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = exports = {};
-
+  
   // 项目名称
-  config.project = '/demo/';
+  config.project = '/shop';
   // 附件地址
   config.filePath = 'F:/work/tup/';
+
+  config.cluster = {
+    listen: {
+      port: 8088,
+      //hostname: '172.18.1.103'
+    }
+  }
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1561088108735_8265';
