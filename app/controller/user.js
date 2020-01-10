@@ -6,10 +6,20 @@ const results = require('../utils/results')
 
 class UserController extends Controller {
 
+  async login () {
+    const { ctx } = this;
+    const params = {
+      mobile: ctx.request.body.username,
+      password: md5(ctx.request.body.password)
+    }
+    const data = await ctx.service.user.login(params);
+    ctx.body = data
+  }
+
   async query () {
     const { ctx } = this;
-    const query = ctx.request.body;
-    const data = await ctx.service.user.query(query);
+    const params = ctx.request.body;
+    const data = await ctx.service.user.query(params);
     if (data) {
       ctx.body = results.querySuccess(data);
     } else {
@@ -19,7 +29,7 @@ class UserController extends Controller {
 
   async add () {
     const { ctx } = this;
-    const data = {
+    const params = {
       uuid: uuidv4(),
       name: ctx.request.body.name,
       head_pic: ctx.request.body.headPic,
@@ -31,7 +41,7 @@ class UserController extends Controller {
       update_time: this.app.mysql.literals.now,
       role_id: ctx.request.body.roleId
     };
-    const data = await this.service.user.add(data);
+    const data = await this.service.user.add(params);
     if (data) {
       ctx.body = results.addSuccess(data);
     } else {
@@ -46,7 +56,7 @@ class UserController extends Controller {
       if (ctx.request.body.password) {
         password = md5(ctx.request.body.password);
       }
-      const data = {
+      const params = {
         name: ctx.request.body.name,
         sex: ctx.request.body.sex,
         phone: ctx.request.body.phone,
@@ -61,7 +71,7 @@ class UserController extends Controller {
           uuid: ctx.request.body.uuid,
         },
       };
-      const data = await this.service.user.update(data, options);
+      const data = await this.service.user.update(params, options);
       if (data) {
         ctx.body = results.updateSuccess(data);
       } else {

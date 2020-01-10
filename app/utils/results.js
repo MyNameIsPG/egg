@@ -3,41 +3,41 @@ const CONSTANT = require('./constant.js')
 let results = {
   querySuccess: (data) => {
     return {
-      mag: CONSTANT.QUERYMSG,
+      msg: CONSTANT.QUERYMSG,
       code: CONSTANT.OKCODE,
       data: data
     }
   },
   addSuccess: (data) => {
     return {
-      mag: CONSTANT.PRESERVEMASG,
+      msg: CONSTANT.PRESERVEMASG,
       code: CONSTANT.OKCODE,
       data: data
     }
   },
   updateSuccess: (data) => {
     return {
-      mag: CONSTANT.UPDATEMSG,
+      msg: CONSTANT.UPDATEMSG,
       code: CONSTANT.OKCODE,
       data: data
     }
   },
   deleteSuccess: (data) => {
     return {
-      mag: CONSTANT.DELETEMSG,
+      msg: CONSTANT.DELETEMSG,
       code: CONSTANT.OKCODE,
       data: data
     }
   },
   errer: () => {
     return {
-      mag: CONSTANT.SYSTEMEXCEPTION,
+      msg: CONSTANT.SYSTEMEXCEPTION,
       code: CONSTANT.FAILCODE
     }
   },
   uuidErrer: () => {
     return {
-      mag: CONSTANT.UUIDEMPTY,
+      msg: CONSTANT.UUIDEMPTY,
       code: CONSTANT.FAILCODE
     }
   }
