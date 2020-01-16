@@ -1,6 +1,16 @@
 const CONSTANT = require('./constant.js')
 
 let results = {
+  queryAllSuccess: (data, total, pageSize, pageNum) => {
+    return {
+      msg: CONSTANT.QUERYMSG,
+      code: CONSTANT.OKCODE,
+      data,
+      total,
+      pageSize,
+      pageNum
+    }
+  },
   querySuccess: (data) => {
     return {
       msg: CONSTANT.QUERYMSG,
