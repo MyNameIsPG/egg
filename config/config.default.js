@@ -16,6 +16,9 @@ module.exports = appInfo => {
   config.project = '/shop';
   // 附件地址
   config.filePath = 'F:/work/tup/';
+  // 附件预览地址
+  config.fileUrl = 'http://localhost:8060/tup/'
+
 
   config.cluster = {
     listen: {

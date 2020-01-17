@@ -16,6 +16,25 @@ class UserController extends Controller {
     ctx.body = data
   }
 
+  async queryAll () {
+    const { ctx } = this;
+    const params = {
+      pageSize: ctx.request.body.pageSize,
+      pageNum: ctx.request.body.pageNum,
+      status: ctx.request.body.status ? ctx.request.body.status : 1,
+      name: ctx.request.body.name ? ctx.request.body.name : null,
+      sex: ctx.request.body.sex ? ctx.request.body.sex : null,
+      mobile: ctx.request.body.mobile ? ctx.request.body.mobile : null,
+      roleId: ctx.request.body.roleId ? ctx.request.body.roleId : null
+    };
+    const data = await ctx.service.user.queryAll(params);
+    if (data) {
+      ctx.body = results.queryAllSuccess(data.list, data.total, data.pageSize, data.pageNum);
+    } else {
+      ctx.body = results.errer();
+    }
+  }
+
   async query () {
     const { ctx } = this;
     const params = ctx.request.body;
@@ -24,6 +43,23 @@ class UserController extends Controller {
       ctx.body = results.querySuccess(data);
     } else {
       ctx.body = results.errer();
+    }
+  }
+
+  async queryOne () {
+    const { ctx } = this;
+    if (ctx.request.body.uuid) {
+      const options = {
+        uuid: ctx.request.body.uuid
+      };
+      const data = await this.service.user.queryOne(options);
+      if (data) {
+        ctx.body = results.querySuccess(data);
+      } else {
+        ctx.body = results.errer();
+      }
+    } else {
+      ctx.body = results.uuidErrer();
     }
   }
 
@@ -61,7 +97,7 @@ class UserController extends Controller {
         sex: ctx.request.body.sex,
         phone: ctx.request.body.phone,
         email: ctx.request.body.email,
-        head_picture: ctx.request.body.head_picture,
+        head_pic: ctx.request.body.head_pic,
         flag: ctx.request.body.flag,
         update_time: this.app.mysql.literals.now,
         password,

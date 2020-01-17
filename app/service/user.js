@@ -30,6 +30,25 @@ class UserService extends Service {
       }
     }
   }
+  async queryAll (data) {
+    const totalNum = await this.app.mysql.query('SELECT COUNT(*) from tb_users');
+    const name = data.name ? `AND name like "%${data.name}%"` : ''
+    const sex = data.sex ? `AND sex = ${data.sex}` : ''
+    const mobile = data.mobile ? `AND mobile like "%${data.mobile}%"` : ''
+    const roleId = data.roleId ? `AND role_id = '${data.roleId}'` : ''
+    const list = await this.app.mysql.query(`select * from tb_users WHERE status = ${data.status} ${sex} ${mobile} ${roleId} ORDER BY create_time DESC LIMIT ${data.pageNum * data.pageSize}, ${data.pageSize}`)
+    console.log('----tb_users----  ' + `select * from tb_users WHERE status = ${data.status} ${name} ${sex} ${mobile} ${roleId} ORDER BY create_time DESC LIMIT ${data.pageNum * data.pageSize}, ${data.pageSize}`)
+    const result = {
+      list,
+      total: totalNum[0]["COUNT(*)"],
+      pageSize: data.pageSize,
+      pageNum: data.pageNum
+    }
+    return result
+  }
+  async queryOne (options) {
+    return await this.app.mysql.get('tb_users', options);
+  }
   async query () {
     return await this.app.mysql.select('tb_users');
   }

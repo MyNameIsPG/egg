@@ -23,7 +23,9 @@ class RoleController extends Controller {
 
   async query () {
     const { ctx } = this;
-    const params = ctx.request.body;
+    const params = {
+      status: ctx.request.body.status ? ctx.request.body.status : 1
+    };
     const data = await ctx.service.roles.query(params);
     if (data) {
       ctx.body = results.querySuccess(data);

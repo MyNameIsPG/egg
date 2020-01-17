@@ -10,6 +10,7 @@ class FilesController extends Controller {
   async index () {
     let ctx = this.ctx;
     let uplaodBasePath = ctx.app.config.filePath;
+    let fileUrl = ctx.app.config.fileUrl;
     let dirname = dayjs(Date.now()).format('YYYY/MM/DD');
     let files = ctx.request.files;
     let dataArr = [];
@@ -35,6 +36,7 @@ class FilesController extends Controller {
           create_id: '',
           name: file.filename,
           path: target,
+          url: fileUrl + dirname + '/' + filename,
           status: 1,
           create_time: new Date()
         };
