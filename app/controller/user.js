@@ -68,14 +68,14 @@ class UserController extends Controller {
     const params = {
       uuid: uuidv4(),
       name: ctx.request.body.name,
-      head_pic: ctx.request.body.headPic,
+      head_pic: ctx.request.body.head_pic,
       mobile: ctx.request.body.mobile,
       sex: ctx.request.body.sex,
       password: md5('123456'),
       status: 1,
       create_time: this.app.mysql.literals.now,
       update_time: this.app.mysql.literals.now,
-      role_id: ctx.request.body.roleId
+      role_id: ctx.request.body.role_id
     };
     const data = await this.service.user.add(params);
     if (data) {
@@ -88,19 +88,12 @@ class UserController extends Controller {
   async update () {
     const { ctx } = this;
     if (ctx.request.body.uuid) {
-      let password;
       if (ctx.request.body.password) {
-        password = md5(ctx.request.body.password);
+        ctx.request.body.password = md5(ctx.request.body.password);
       }
       const params = {
-        name: ctx.request.body.name,
-        sex: ctx.request.body.sex,
-        phone: ctx.request.body.phone,
-        email: ctx.request.body.email,
-        head_pic: ctx.request.body.head_pic,
-        flag: ctx.request.body.flag,
-        update_time: this.app.mysql.literals.now,
-        password,
+        ...ctx.request.body,
+        update_time: new Date()
       };
       const options = {
         where: {

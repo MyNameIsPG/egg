@@ -11,7 +11,7 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = exports = {};
-  
+
   // 项目名称
   config.project = '/shop';
   // 附件地址
@@ -51,6 +51,7 @@ module.exports = appInfo => {
       // 数据库名
       database: 'shopping',
       timezone: '+08:00',
+      underscored: true
     },
     // 是否加载到 app 上，默认开启
     app: true,
