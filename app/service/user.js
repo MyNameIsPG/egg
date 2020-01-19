@@ -32,12 +32,12 @@ class UserService extends Service {
   }
   async queryAll (data) {
     const totalNum = await this.app.mysql.query('SELECT COUNT(*) from tb_users');
-    const name = data.name ? `AND name like "%${data.name}%"` : ''
-    const sex = data.sex ? `AND sex = ${data.sex}` : ''
-    const mobile = data.mobile ? `AND mobile like "%${data.mobile}%"` : ''
-    const roleId = data.roleId ? `AND role_id = '${data.roleId}'` : ''
-    const list = await this.app.mysql.query(`select * from tb_users WHERE status = ${data.status} ${sex} ${mobile} ${roleId} ORDER BY create_time DESC LIMIT ${data.pageNum * data.pageSize}, ${data.pageSize}`)
-    console.log('----tb_users----  ' + `select * from tb_users WHERE status = ${data.status} ${name} ${sex} ${mobile} ${roleId} ORDER BY create_time DESC LIMIT ${data.pageNum * data.pageSize}, ${data.pageSize}`)
+    const name = data.name ? `AND u.name like "%${data.name}%"` : ''
+    const sex = data.sex ? `AND u.sex = ${data.sex}` : ''
+    const mobile = data.mobile ? `AND u.mobile like "%${data.mobile}%"` : ''
+    const roleId = data.roleId ? `AND u.role_id = '${data.roleId}'` : ''
+    const list = await this.app.mysql.query(`SELECT u.*, r.name AS roleName FROM tb_users u LEFT JOIN tb_roles r ON u.role_id = r.uuid WHERE u.status = ${data.status} ${name} ${sex} ${mobile} ${roleId} AND 1=1 ORDER BY create_time DESC LIMIT 0, 10`)
+    console.log('----tb_users----  ' + `SELECT u.*, r.name AS roleName FROM tb_users u LEFT JOIN tb_roles r ON u.role_id = r.uuid WHERE u.status = ${data.status} ${name} ${sex} ${mobile} ${roleId} AND 1=1 ORDER BY create_time DESC LIMIT 0, 10`)
     const result = {
       list,
       total: totalNum[0]["COUNT(*)"],
