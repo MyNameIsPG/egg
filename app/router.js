@@ -19,5 +19,12 @@ module.exports = app => {
   router.post(project + '/role/add', controller.roles.add);
   router.post(project + '/role/update', controller.roles.update);
 
+  router.post(project + '/menu/query', controller.menu.query);
+  router.post(project + '/menu/queryAll', controller.menu.queryAll);
+  router.post(project + '/menu/queryOne', controller.menu.queryOne);
+  router.post(project + '/menu/add', controller.menu.add);
+  router.post(project + '/menu/update', controller.menu.update);
+  router.post(project + '/menu/tree', controller.menu.tree);
+
   router.post(project + '/upload', controller.files.index);
 };
