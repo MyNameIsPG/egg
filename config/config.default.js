@@ -12,13 +12,14 @@ module.exports = appInfo => {
    **/
   const config = exports = {};
 
+  // debug 为 true 时，用于本地调试
+  config.debug = true;
   // 项目名称
   config.project = '/shop';
   // 附件地址
   config.filePath = 'F:/work/tup/';
   // 附件预览地址
   config.fileUrl = 'http://localhost:8060/tup/'
-
 
   config.cluster = {
     listen: {
