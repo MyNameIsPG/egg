@@ -69,6 +69,15 @@ module.exports = appInfo => {
     },
   };
 
+  config.jwt = {
+    enable: true,
+    ignore: [config.project + '/user/login'],
+    secret: "123456"//自定义 token 的加密条件字符串
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

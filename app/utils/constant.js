@@ -12,5 +12,6 @@ const CONSTANT = {
   ACCOUNTERROR: "账号错误",
   PASSWORDERROR: "密码错误",
   ACCOUNTDOESNOTEXIST: "账号不存在",
+  TOKENEMPTY: "token不存在"
 }
 module.exports = CONSTANT;

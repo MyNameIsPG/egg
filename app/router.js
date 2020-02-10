@@ -6,6 +6,7 @@
 module.exports = app => {
   const { router, controller } = app;
   const project = app.config.project;
+
   router.post(project + '/user/login', controller.user.login);
   router.post(project + '/user/query', controller.user.query);
   router.post(project + '/user/queryAll', controller.user.queryAll);
@@ -25,6 +26,8 @@ module.exports = app => {
   router.post(project + '/menu/add', controller.menu.add);
   router.post(project + '/menu/update', controller.menu.update);
   router.post(project + '/menu/tree', controller.menu.tree);
+
+  router.post(project + '/products/query', controller.products.query);
 
   router.post(project + '/upload', controller.files.index);
 };
