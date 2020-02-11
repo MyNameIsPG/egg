@@ -12,7 +12,8 @@ const CONSTANT = {
   ACCOUNTERROR: "账号错误",
   PASSWORDERROR: "密码错误",
   ACCOUNTDOESNOTEXIST: "账号不存在",
-  TOKENEMPTY: "token不存在",
+  TOKENEMPTY: "请先登录",
   TOKENINVALID: "无效的token",
+  TOKENEXPIRED: "token过期"
 }
 module.exports = CONSTANT;

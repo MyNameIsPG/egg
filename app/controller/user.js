@@ -2,8 +2,8 @@
 const Controller = require('egg').Controller;
 const uuidv4 = require('uuid/v4');
 const md5 = require('md5');
-const results = require('../utils/results');
 const jwt = require("jsonwebtoken");
+const results = require('../utils/results');
 
 class UserController extends Controller {
 
@@ -14,7 +14,7 @@ class UserController extends Controller {
       password: md5(ctx.request.body.password)
     }
     const data = await ctx.service.user.login(params);
-    const token = jwt.sign({ userinfo: JSON.stringify(data.data) }, app.config.jwt.secret, { expiresIn: 60 * 60, });
+    const token = jwt.sign({ userinfo: JSON.stringify(data.data) }, app.config.jwt.secret, { expiresIn: 600000 });
     data.token = token
     ctx.body = data
   }
@@ -41,6 +41,7 @@ class UserController extends Controller {
   async query () {
     const { ctx } = this;
     const params = ctx.request.body;
+    console.log(ctx.getAccessToken())
     const data = await ctx.service.user.query(params);
     if (data) {
       ctx.body = results.querySuccess(data);
