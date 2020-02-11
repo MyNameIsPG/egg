@@ -36,6 +36,7 @@ module.exports = appInfo => {
   };
   // add your middleware config here
   config.middleware = [
+    'tokenHandler',
     'notfoundHandler'
   ];
   // 数据库配置
@@ -73,7 +74,7 @@ module.exports = appInfo => {
   config.jwt = {
     enable: true,
     ignore: [config.project + '/user/login'],
-    secret: "123456"//自定义 token 的加密条件字符串
+    secret: "123456"
   };
   config.cors = {
     origin: '*',

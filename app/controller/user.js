@@ -2,7 +2,8 @@
 const Controller = require('egg').Controller;
 const uuidv4 = require('uuid/v4');
 const md5 = require('md5');
-const results = require('../utils/results')
+const results = require('../utils/results');
+const jwt = require("jsonwebtoken");
 
 class UserController extends Controller {
 
@@ -13,11 +14,7 @@ class UserController extends Controller {
       password: md5(ctx.request.body.password)
     }
     const data = await ctx.service.user.login(params);
-    const token = app.jwt.sign({
-      userinfo: JSON.stringify(data.data), //需要存储的 token 数据
-    }, app.config.jwt.secret, {
-      expiresIn: 60 * 60,
-    });
+    const token = jwt.sign({ userinfo: JSON.stringify(data.data) }, app.config.jwt.secret, { expiresIn: 60 * 60, });
     data.token = token
     ctx.body = data
   }
@@ -33,9 +30,6 @@ class UserController extends Controller {
       mobile: ctx.request.body.mobile ? ctx.request.body.mobile : null,
       roleId: ctx.request.body.roleId ? ctx.request.body.roleId : null
     };
-    const token = ctx.request.header.authorization;
-    console.log(token)
-    console.log(ctx.state.user);
     const data = await ctx.service.user.queryAll(params);
     if (data) {
       ctx.body = results.queryAllSuccess(data.list, data.total, data.pageSize, data.pageNum);
@@ -46,10 +40,6 @@ class UserController extends Controller {
 
   async query () {
     const { ctx } = this;
-    const token = ctx.request.header.authorization;
-    const method = ctx.method.toLowerCase();
-    console.log(token)
-    console.log(method)
     const params = ctx.request.body;
     const data = await ctx.service.user.query(params);
     if (data) {
